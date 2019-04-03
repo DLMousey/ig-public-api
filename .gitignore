@@ -1,4 +1,4 @@
 *.DS_Store
 
 # for ignoring go binary files
-**/*.go
+*api
