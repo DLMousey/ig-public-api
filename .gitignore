@@ -1,3 +1,4 @@
-.idea/
-node_modules/
-config/api.js
+*.DS_Store
+
+# for ignoring go binary files
+**/*.go
