@@ -1,0 +1,4 @@
+*.DS_Store
+
+# for ignoring go binary files
+*.app
