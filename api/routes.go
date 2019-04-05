@@ -1,11 +1,14 @@
-/*contains all the routes*/
+/*
+Contains all the routes
+*/
 
 package main
 
 import (
-	"encoding/json"
 	"fmt"
 	"net/http"
+
+	"github.com/nacleric/ig-public-api/common"
 )
 
 //mock Data
@@ -17,28 +20,21 @@ type mockUser struct {
 
 func (a *app) setRoutes() {
 	/*	sample routes
-		a.router.HandleFunc("/api/", s.handleAPI())
-		a.router.HandleFunc("/api/:users", s.handleUsers())
-		a.router.HandleFunc("/api/:images", s.handleImages())
+		a.router.HandleFunc("/api/", s.handleAPI()).Methods("GET")
+		a.router.HandleFunc("/api/:users", s.handleUsers()).Methods("GET")
+		a.router.HandleFunc("/api/:images", s.handleImages()).Methods("GET")
 	*/
 	a.Get("/test", a.handleTest)
 }
 
 /* HANDLERS */
 
+// test handler
 func (a *app) handleTest(w http.ResponseWriter, r *http.Request) {
-	foo := &mockUser{Firstname: "Bob", Lastname: "Ross", Age: 53}
 	fmt.Println("route is working")
 
-	// maps datatype to json
-	response, err := json.Marshal(foo)
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
-	}
-	w.Header().Set("Content-Type", "application/json")
-	w.WriteHeader(http.StatusCreated)
-	w.Write(response)
+	foo := &mockUser{Firstname: "Bob", Lastname: "Ross", Age: 53}
+	common.RespondJSON(w, http.StatusCreated, foo)
 }
 
 // Get wraps the router for GET method
