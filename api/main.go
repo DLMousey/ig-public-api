@@ -23,6 +23,7 @@ func (a *app) Initialize() {
 	fmt.Println("api is running")
 	log.Fatal(http.ListenAndServe(":8000", a.router))
 }
+
 func main() {
 	var app app
 	app.Initialize()
