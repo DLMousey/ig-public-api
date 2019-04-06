@@ -1,28 +1,43 @@
+/*
+Contains all the routes
+*/
+
 package main
 
 import (
 	"fmt"
 	"net/http"
+
+	"github.com/nacleric/ig-public-api/common"
 )
 
-/* contains all the routes */
+//mock Data
+type mockUser struct {
+	Firstname string `json:"firstname"`
+	Lastname  string `json:"lastname"`
+	Age       int    `json:"age"`
+}
 
 func (a *app) setRoutes() {
-	/*	sample code
-		a.router.HandleFunc("/api/", s.handleAPI())
-		a.router.HandleFunc("/api/:users", s.handleUsers())
-		a.router.HandleFunc("/api/:images", s.handleImages())
+	/*	sample routes
+		a.router.HandleFunc("/api/", s.handleAPI()).Methods("GET")
+		a.router.HandleFunc("/api/:users", s.handleUsers()).Methods("GET")
+		a.router.HandleFunc("/api/:images", s.handleImages()).Methods("GET")
 	*/
-	a.router.HandleFunc("/test", a.handleTest).Methods("GET")
+	a.Get("/test", a.handleTest)
 }
 
+/* HANDLERS */
+
+// test handler
 func (a *app) handleTest(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("route is working")
+
+	foo := &mockUser{Firstname: "Bob", Lastname: "Ross", Age: 53}
+	common.RespondJSON(w, http.StatusCreated, foo)
 }
 
-/* Stole this code somewhere and it looks clean asf
 // Get wraps the router for GET method
-func (a *App) Get(path string, f func(w http.ResponseWriter, r *http.Request)) {
-	a.Router.HandleFunc(path, f).Methods("GET")
+func (a *app) Get(path string, f func(w http.ResponseWriter, r *http.Request)) {
+	a.router.HandleFunc(path, f).Methods("GET")
 }
-*/
